@@ -17,6 +17,7 @@ start:
 			mov dh,1
 			mov dl,5
 			xor ch,ch
+			xor al,al
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 linijki:    ;petla zewnetrzna, przechodzi przez linijki
 			;TU WEWNETRZNA PETLA
@@ -27,7 +28,8 @@ litery:
 			loop litery 	;wyswietlamy litery dh razy
 			;KONIEC WEWNETRZNEJ PETLI
 			; koniec petli litery
-			add di,word ptr bl ; przesuwamy adres pamieci ekranu do nastepnej linijki
+			mov al,bl
+			add di,ax ; przesuwamy adres pamieci ekranu do nastepnej linijki
 			add dh,2  ; zwiekszamy liczbe literek o 2 
 			sub dl,1  ; zmniejszamy licznik petli linijki o 1
 			jnz linijki ; jesli licznik petli dl jest rowny 0, to konczymy drukowanie, bo nie ma wiecej linii do druku
