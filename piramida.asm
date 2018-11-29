@@ -10,6 +10,19 @@ start:
 			mov ax, B800h
 			mov es, ax
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+			mov di,39
+			mov bh,65
+			mov bl,158
+			mov dh,1
+			mov dl,5
+			
+			;TU WEWNETRZNA PETLA
+			mov cx,dh
+litery:			
+			mov es[di],bh 	;wyswietl litere
+			inc di 			;przesun kursor o 1
+			loop litery 	;wyswietlamy litery dh razy
+			;KONIEC WEWNETRZNEJ PETLI
 			
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			;WYCHODZE Z PROGRAMU
