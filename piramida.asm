@@ -17,7 +17,7 @@ start:
 			mov dh,1
 			mov dl,5
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-linijki:    petla zewnetrzna, przechodzi przez linijki
+linijki:    ;petla zewnetrzna, przechodzi przez linijki
 			;TU WEWNETRZNA PETLA
 			mov cx,dh
 litery:			
