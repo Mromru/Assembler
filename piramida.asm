@@ -7,8 +7,8 @@ start:
 			mov ax,stackSegment
 			mov ss,ax
 			mov sp,offset stackTop
-			mov ax, B800h
-			mov es, ax
+			mov ax,0B800h
+			mov es,ax
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			;USTAWIAM WARTOSCI POCZATKOWE
 			mov di,39
@@ -16,12 +16,13 @@ start:
 			mov bl,158
 			mov dh,1
 			mov dl,5
+			xor ch,ch
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 linijki:    ;petla zewnetrzna, przechodzi przez linijki
 			;TU WEWNETRZNA PETLA
-			mov cx,dh ; aktualizacja licznika petli wewnetrznej
+			mov cl,dh ; aktualizacja licznika petli wewnetrznej
 litery:			
-			mov es[di],bh 	;wyswietl litere
+			mov es:[di],bh 	;wyswietl litere
 			inc di 			;przesun kursor o 1
 			loop litery 	;wyswietlamy litery dh razy
 			;KONIEC WEWNETRZNEJ PETLI
@@ -29,7 +30,7 @@ litery:
 			add di,bl ; przesuwamy adres pamieci ekranu do nastepnej linijki
 			add dh,2  ; zwiekszamy liczbe literek o 2 
 			sub dl,1  ; zmniejszamy licznik petli linijki o 1
-			jnz dl,linijki ; jesli licznik petli dl jest rowny 0, to konczymy drukowanie, bo nie ma wiecej linii do druku
+			jnz linijki ; jesli licznik petli dl jest rowny 0, to konczymy drukowanie, bo nie ma wiecej linii do druku
 
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			;WYCHODZE Z PROGRAMU
