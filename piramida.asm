@@ -27,7 +27,7 @@ litery:
 			loop litery 	;wyswietlamy litery dh razy
 			;KONIEC WEWNETRZNEJ PETLI
 			; koniec petli litery
-			add di,bl ; przesuwamy adres pamieci ekranu do nastepnej linijki
+			add di,word ptr bl ; przesuwamy adres pamieci ekranu do nastepnej linijki
 			add dh,2  ; zwiekszamy liczbe literek o 2 
 			sub dl,1  ; zmniejszamy licznik petli linijki o 1
 			jnz linijki ; jesli licznik petli dl jest rowny 0, to konczymy drukowanie, bo nie ma wiecej linii do druku
