@@ -19,7 +19,7 @@ start:
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 linijki:    ;petla zewnetrzna, przechodzi przez linijki
 			;TU WEWNETRZNA PETLA
-			mov cx,dh
+			mov cx,dh ; aktualizacja licznika petli wewnetrznej
 litery:			
 			mov es[di],bh 	;wyswietl litere
 			inc di 			;przesun kursor o 1
