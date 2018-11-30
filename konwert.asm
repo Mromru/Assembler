@@ -31,8 +31,8 @@ userInput:
 				mov ah,00h	; pobranie znaku
 				int 16h		; z klawiatury
 				
-				call isNumber	;sprawdzamy czy jest liczbą
-				jnc endUserLoop ;jezeli ustawilismy C=0, to nie jest i przerywamy wprowadzanie danych
+				call isNumber	  ;sprawdzamy czy jest liczbą
+				jnc checkNoData ;jezeli ustawilismy C=0, to nie jest i przerywamy wprowadzanie danych
 				
 				mov es:[di],al  ;wyswietlenie znaku na ekranie
 				add di,2	    ;i przesuniecie kursora
@@ -52,6 +52,10 @@ userInput:
 						jmp endUserLoop
 					noOverflowAdd:
 				loop userInput
+checkNoData:
+			cmp cl,5
+			jnz endUserLoop
+			call noData
 endUserLoop:
 			;WYCHODZIMY Z PROGRAMU
 			mov     ah,4ch
@@ -69,7 +73,14 @@ endUserLoop:
 			clc
 		RET
 		indicateOverflow:
-				;TODO WYSWIETLENIE KOMUNIKATU
+				mov si,offset overflowString
+				mov ah,cl
+				mov cx, 24
+				printOverflowString:
+				movsb
+				add di,1
+				loop printOverflowString
+				mov cl,ah
 				mov dx,0FFFFh
 		RET
 		tenMultiplyDx:
@@ -83,11 +94,18 @@ endUserLoop:
 			mov cl,ah
 			multiplyEnd:
 		RET
-		
+		noData:
+			mov si, offset noDataString
+			mov cx, 16
+			printNoDataString:
+				movsb
+				add di,1
+				loop printNoDataString
+		RET
 code ends
 data segment
-	
-	
+	overflowString db ' -> 65535; PRZEPELNIENIE'
+	noDataString db   'BRAK DANYCH -> 0'
 data ends
 stackS segment
 stackTop 	label word
