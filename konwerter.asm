@@ -52,8 +52,6 @@ userInput:
 					noOverflowAdd:
 				loop userInput
 endUserLoop:
-			add dx,1
-			add dx,1
 			;WYCHODZIMY Z PROGRAMU
 			mov     ah,4ch
 			mov	    al,0
