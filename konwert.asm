@@ -30,12 +30,13 @@ start:
 userInput:
 				mov ah,00h	; pobranie znaku
 				int 16h		; z klawiatury
-				mov es:[di],al ;wyswietlenie znaku na ekranie
-				add di,2	   ;i przesuniecie kursora
-				sub al,30h
 				
-				call isNumber
-				jnc endUserLoop
+				call isNumber	;sprawdzamy czy jest liczbą
+				jnc endUserLoop ;jezeli ustawilismy C=0, to nie jest i przerywamy wprowadzanie danych
+				
+				mov es:[di],al  ;wyswietlenie znaku na ekranie
+				add di,2	    ;i przesuniecie kursora
+				sub al,'0'		;char do int
 				
 				;mnozymy przez 10
 				call tenMultiplyDx
@@ -58,7 +59,14 @@ endUserLoop:
 	        int	    21h
 		;PROCEDURY
 		isNumber:
+			cmp al,'0'
+			jl notNumber
+			cmp al,'9'
+			jg notNumber
 			stc
+		RET   
+			notNumber:
+			clc
 		RET
 		indicateOverflow:
 				;TODO WYSWIETLENIE KOMUNIKATU
