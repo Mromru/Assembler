@@ -40,7 +40,7 @@ userInput:
 				
 				;mnozymy przez 10
 				call tenMultiplyDx
-					jno noOverflowMul
+					jnc noOverflowMul
 						call indicateOverflow
 						jmp endUserLoop
 					noOverflowMul:
