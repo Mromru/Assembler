@@ -2,38 +2,45 @@ knowledge base nazwa
  sources
  end;
  facets
-    valju:
+    klopsik:
 	single yes
 	val oneof { "klopsik1",
 		    "klopsik2" }
-        picture {"klopsik1.png","klopsik2.png"};
-		
-	hier:
-	query "[BPOGRUBIONYTEKST:"
-	val oneof { "geg", 
-		    "kek",
-		    "kk",
-		    "og" }; 
+        picture {"PastaSpicyCasual.bmp","PastaSpicyNinja.bmp"};
+	
+	baza:
+	query "[BPodaj bazê:"
+	val oneof { "grzyby", "jajka", "owoce morza", makaron" }; 
+	
+	ninja:
+	query "[BCzy Ninja?:"
+	val oneof { "Ninja", "Nie Ninja" }; 
+	
+	smak:
+	query "[BPodaj smak:"
+	val oneof { "s³odki", "ostry" }; 
 		    
  end;
 
  rules
 
-	valju = "klopsik1" if
+	klopsik = "klopsik1" if
 	hier = "geg";
 	
-	valju = "klopsik1" if
+	klopsik = "klopsik1" if
 	hier = "kek";
 	
-	valju = "klopsik2" if
+	klopisk = "klopsik2" if
 	hier = "kk";
 	
-	valju = "klopsik2" if
+	klopsik = "klopsik2" if
 	hier = "og";
 	
  end;
 
  control
+	setSysText( problem, "[2Klopsik power" );
+    
 	char Text1, Text2, Text3;
 	run;
 	createAppWindow;
