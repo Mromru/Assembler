@@ -1,0 +1,64 @@
+knowledge base nazwa
+ sources
+    coto:
+	type what_is_file
+	file "grzyby2.dbw";
+ end;
+ facets
+    valju:
+	single yes
+	val oneof { "klopsik1",
+		    "klopsik2" }
+        picture {"grzyb12.bmp","grzyb22.bmp"};
+		
+	hier:
+	query "[BPOGRUBIONYTEKST:"
+	val oneof { "geg", 
+		    "kek",
+		    "kk",
+		    "og" }; 
+		    
+ end;
+
+ rules
+
+	valju = "klopsik1" if
+	hier = "geg";
+	
+	valju = "klopsik1" if
+	hier = "kek";
+	
+	valju = "klopsik2" if
+	hier = "kk";
+	
+	valju = "klopsik2" if
+	hier = "og";
+	
+ end;
+
+ control
+   run;      
+   char  S1, S2, S3;      
+   S1 := "Kreator klopsików";   
+   S2 := " sdaasd as";
+   S3 := "Joanna Micha³ek & Tomasz Piekarczyk";
+   vignette( S1, S2, S3 );
+   setAppWinTitle("Przeglad sniadan");      
+   addSolution( yes );      
+   int Odp;   Odp:=1;      
+   menu "Menu"    
+   1. "Wybor sniadania"    
+   2. "Exit"    case 1:     
+   while (Odp==1)      
+   begin       
+   goal("valiu=Valiu");
+   confirmBox( 0, 0, "Kontynuacja","Chcesz ponownie wybrad", Odp );      
+   delNewFacts;      
+   end;    
+   case 2:    
+   exit;   
+   end;  
+ end;
+end;
+
+
