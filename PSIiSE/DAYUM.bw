@@ -4,17 +4,46 @@ knowledge base nazwa
  facets
     klopsik:
 	single yes
-	val oneof { "klopsik1",
-		    "klopsik2" }
-        picture {"PastaSpicyCasual.bmp", "PastaSpicyNinja.bmp", "PastaSweetCasual.bmp", "PastaSweetNinja.bmp", "SeaSpicyCasual.bmp", "SeaSpicyNinja.bmp", "SeaSweetCasual.bmp", "SeaSweetNinja.bmp", "EggSpicyCasual.bmp", "EggSpicyNinja.bmp", "EggSweetCasual.bmp", "EggSweetNinja.bmp", "MushroomSpicyCasual.bmp", "MushroomSpicyNinja.bmp", "MushroomSweetCasual.bmp", "MushroomSweetNinja"};
-	
+	val oneof {"PastaSpicyCasual",
+				"PastaSpicyNinja",
+				"PastaSweetCasual",
+				"PastaSweetNinja",
+				"SeaSpicyCasual",
+				"SeaSpicyNinja",
+				"SeaSweetCasual",
+				"SeaSweetNinja",
+				"EggSpicyCasual",
+				"EggSpicyNinja",
+				"EggSweetCasual",
+				"EggSweetNinja",
+				"MushroomSpicyCasual",
+				"MushroomSpicyNinja",
+				"MushroomSweetCasual",
+				"MushroomSweetNinja"};
+        picture {"PastaSpicyCasual.bmp",
+				"PastaSpicyNinja.bmp",
+				"PastaSweetCasual.bmp",
+				"PastaSweetNinja.bmp",
+				"SeaSpicyCasual.bmp",
+				"SeaSpicyNinja.bmp",
+				"SeaSweetCasual.bmp",
+				"SeaSweetNinja.bmp",
+				"EggSpicyCasual.bmp",
+				"EggSpicyNinja.bmp",
+				"EggSweetCasual.bmp",
+				"EggSweetNinja.bmp",
+				"MushroomSpicyCasual.bmp",
+				"MushroomSpicyNinja.bmp",
+				"MushroomSweetCasual.bmp",
+				"MushroomSweetNinja.bmp"};
 	baza:
 	query "[BPodaj bazê:"
 	val oneof { "grzyby", "jajka", "owoce morza", makaron" }; 
 	
+	
 	ninja:
 	query "[BCzy Ninja?:"
-	val oneof { "Ninja", "Nie Ninja" }; 
+	val oneof { "ninja", "nie ninja" }; 
 	
 	smak:
 	query "[BPodaj smak:"
@@ -24,17 +53,37 @@ knowledge base nazwa
 
  rules
 
-	klopsik = "klopsik1" if
-	hier = "geg";
+	klopsik = "PastaSpicyCasual" if baza = "makaron", smak = "ostry", ninja = "nie ninja";
 	
-	klopsik = "klopsik1" if
-	hier = "kek";
+	klopsik = "PastaSpicyNinja" if baza = "makaron", smak = "ostry", ninja = "ninja";
+
+	klopsik = "PastaSweetCasual" if baza = "makaron", smak = "s³odki", ninja = "nie ninja";
 	
-	klopisk = "klopsik2" if
-	hier = "kk";
+	klopsik = "PastaSweetNinja" if baza = "makaron", smak = "s³odki", ninja = "ninja";
 	
-	klopsik = "klopsik2" if
-	hier = "og";
+	klopsik = "SeaSpicyCasual" if baza = "owoce morza", smak = "ostry", ninja = "nie ninja";
+	
+	klopsik = "SeaSpicyNinja" if baza = "owoce morza", smak = "ostry", ninja = "ninja";
+	
+	klopsik = "SeaSweetCasual" if baza = "owoce morza", smak = "s³odki", ninja = "nie ninja";
+	
+	klopsik = "SeaSweetNinja" if baza = "owoce morza", smak = "s³odki", ninja = "ninja";
+	
+	klopsik = "EggSpicyCasual" if baza = "jajka", smak = "ostry", ninja = "nie ninja";
+	
+	klopsik = "EggSpicyNinja" if baza = "jajka", smak = "ostry", ninja = "ninja";
+	
+	klopsik = "EggSweetCasual" if baza = "jajka", smak = "s³odki", ninja = "nie ninja";
+	
+	klopsik = "EggSweetNinja" if baza = "jajka", smak = "s³odki", ninja = "ninja";
+	
+	klopsik = "MushroomSpicyCasual" if baza = "grzyby", smak = "ostry", ninja = "nie ninja";
+	
+	klopsik = "MushroomSpicyNinja" if baza = "grzyby", smak = "ostry", ninja = "ninja";
+	
+	klopsik = "MushroomSweetCasual" if baza = "grzyby", smak = "s³odki", ninja = "nie ninja";
+	
+	klopsik = "MushroomSweetNinja" if baza = "grzyby", smak = "s³odki", ninja = "ninja";
 	
  end;
 
@@ -44,9 +93,9 @@ knowledge base nazwa
 	char Text1, Text2, Text3;
 	run;
 	createAppWindow;
-	Text1 := "Nazwa aplikacji";
-	Text2 := "Informacje dodatkowe\nAutor programu\nWydawca";
-	Text3 := "© 2006, Autor/Firma";
+	Text1 := "Kreator Klopsików";
+	Text2 := " ";
+	Text3 := "Joanna Micha³ek & Tomasz Piekarczyk";
 	vignette( Text1, Text2, Text3 );
 	goal("valju=X");
  end;
