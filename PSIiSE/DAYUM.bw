@@ -1,15 +1,12 @@
 knowledge base nazwa
  sources
-    coto:
-	type what_is_file
-	file "grzyby2.dbw";
  end;
  facets
     valju:
 	single yes
 	val oneof { "klopsik1",
 		    "klopsik2" }
-        picture {"grzyb12.bmp","grzyb22.bmp"};
+        picture {"klopsik1.png","klopsik2.png"};
 		
 	hier:
 	query "[BPOGRUBIONYTEKST:"
@@ -37,27 +34,14 @@ knowledge base nazwa
  end;
 
  control
-   run;      
-   char  S1, S2, S3;      
-   S1 := "Kreator klopsików";   
-   S2 := " sdaasd as";
-   S3 := "Joanna Micha³ek & Tomasz Piekarczyk";
-   vignette( S1, S2, S3 );
-   setAppWinTitle("Przeglad sniadan");      
-   addSolution( yes );      
-   int Odp;   Odp:=1;      
-   menu "Menu"    
-   1. "Wybor sniadania"    
-   2. "Exit"    case 1:     
-   while (Odp==1)      
-   begin       
-   goal("valiu=Valiu");
-   confirmBox( 0, 0, "Kontynuacja","Chcesz ponownie wybrad", Odp );      
-   delNewFacts;      
-   end;    
-   case 2:    
-   exit;   
-   end;  
+	char Text1, Text2, Text3;
+	run;
+	createAppWindow;
+	Text1 := "Nazwa aplikacji";
+	Text2 := "Informacje dodatkowe\nAutor programu\nWydawca";
+	Text3 := "© 2006, Autor/Firma";
+	vignette( Text1, Text2, Text3 );
+	goal("valju=X");
  end;
 end;
 
