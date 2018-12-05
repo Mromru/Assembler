@@ -6,7 +6,7 @@ knowledge base nazwa
 	single yes
 	val oneof { "klopsik1",
 		    "klopsik2" }
-        picture {"PastaSpicyCasual.bmp","PastaSpicyNinja.bmp"};
+        picture {"PastaSpicyCasual.bmp", "PastaSpicyNinja.bmp", "PastaSweetCasual.bmp", "PastaSweetNinja.bmp", "SeaSpicyCasual.bmp", "SeaSpicyNinja.bmp", "SeaSweetCasual.bmp", "SeaSweetNinja.bmp", "EggSpicyCasual.bmp", "EggSpicyNinja.bmp", "EggSweetCasual.bmp", "EggSweetNinja.bmp", "MushroomSpicyCasual.bmp", "MushroomSpicyNinja.bmp", "MushroomSweetCasual.bmp", "MushroomSweetNinja"};
 	
 	baza:
 	query "[BPodaj bazê:"
