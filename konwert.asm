@@ -57,10 +57,41 @@ checkNoData:
 			jnz endUserLoop
 			call noData
 endUserLoop:
-			;WYCHODZIMY Z PROGRAMU
-			mov     ah,4ch
-			mov	    al,0
-	        int	    21h
+			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;WYSWIETLANIE HEX
+			mov bx,dx ;kopiuj wynik
+			xor ch,ch
+			mov cl,4
+showHex:	
+				mov ah,cl ;zapisuję counter glownej petli
+				fourCyclicLeft:
+					;TODO PRZESUNIECIE CYKLICZNE W LEWO
+					loop fourCyclicLeft
+				mov cl,ah ;przywracam counter glownej petli
+				mov al,bl ;kopiuję 8 bitow
+				and al,0fh ;biore 4 najmlodsze
+				call toHex ;zamieniam na znak w akumulatorze
+				mov es:[di],al ;piszę na ekran
+				add di,2 ;przesuwam kursor
+				;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
+				mov bx,dx
+				xor ch,ch
+				mov cl, 8
+			loop showHex
+			mov bx,dx
+			xor ch,ch
+			mov cl, 8
+showBin:
+				mov al,bl ;kopiuję 8 bitow
+				and al,01h ;biore 1 najmlodszy
+				add al,'0';zamieniam na znak w akumulatorze
+				mov es:[di],al ;piszę na ekran
+				add di,2 ;przesuwam kursor
+				loop showBin
+				;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+				;WYCHODZIMY Z PROGRAMU
+				mov     ah,4ch
+				mov	    al,0
+				int	    21h
 		;PROCEDURY
 		isNumber:
 			cmp al,'0'
@@ -101,6 +132,15 @@ endUserLoop:
 				movsb
 				add di,1
 				loop printNoDataString
+		RET
+		toHex:
+			cmp al,10
+			jge letter
+			add al,'0'
+			jmp finnishToHex
+			letter:
+			add al,'A'	
+		finnishToHex:
 		RET
 code ends
 data segment
