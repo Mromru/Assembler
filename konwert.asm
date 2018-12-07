@@ -67,9 +67,16 @@ endUserLoop:
 			mov di,160
 			mov bx,dx ;kopiuj wynik
 			xor ch,ch ;zeruj rejestr ch
+			;;;;;; STRING HEX:
+			mov si, offset hexString
+			mov cx, 5
+			printhexString:
+				movsb
+				add di,1
+				loop printhexString
 			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
-				ROL bx,4 ; przesuwamy cyklicznie w lewo 4 razy
+				rol bx,4 ; przesuwamy cyklicznie w lewo 4 razy
 				mov al,bl ;kopiuję 8 bitow
 				and al,0fh ;biore 4 najmlodsze
 				call toHex ;zamieniam na znak w akumulatorze
@@ -80,9 +87,16 @@ showHex:
 			mov di,320
 			mov bx,dx
 			xor ch,ch
+			;;;;; String BIN:
+			mov si, offset binString
+			mov cx, 5
+			printbinString:
+				movsb
+				add di,1
+				loop printbinString
 			mov cl,16
 showBin:
-				ROL bx,1
+				rol bx,1
 				mov al,bl ;kopiuję 8 bitow
 				and al,01h ;biore 1 najmlodszy
 				add al,'0';zamieniam na znak w akumulatorze
@@ -150,6 +164,8 @@ data segment
 	overflowString db ' -> 65535; PRZEPELNIENIE'
 	noDataString db   'BRAK DANYCH -> 0'
 	inputDataString db 'PODAJ LICZBE DO KONWERSJI: ' ;27
+	hexString db 'HEX: ' ;5
+	binString db 'BIN: ' ;5
 data ends
 stackS segment
 stackTop 	label word
