@@ -38,7 +38,7 @@ knowledge base nazwa
 				"MushroomSweetNinja.bmp"};
 	baza:
 	query "[BPodaj bazê:"
-	val oneof { "grzyby", "jajka", "owoce morza", makaron" }; 
+	val oneof { "grzyby", "jajka", "owoce morza", "makaron" }; 
 	
 	
 	ninja:
@@ -100,5 +100,3 @@ knowledge base nazwa
 	goal("valju=X");
  end;
 end;
-
-
