@@ -8,23 +8,23 @@ start:
 			mov ss,ax
 			mov sp,offset stackTop
 			;inicjowanie es i di
-			mov ax, 0B800h
+			mov ax, 0B800h ;inicjowanie adresu poczatku pamieci ekranu
 			mov es, ax
-			mov di, 0
+			mov di, 0 ;zerujemy di - przesuniecie kursora po ekranie
 			
 			;przygotowanie do czyszczenia ekranu
-			mov cx,4000
-			mov ax,0720h
+			mov cx,2000 ;liczba slow do wyczyszczenia - 80x25??
+			mov ax,0720h ;szara spacja na czarnym tle - puste miejsce
 			czysc:
-				mov es:[di],ax
-				add di,2
-				loop czysc
-			;przygotowanie do otrzymania znakow
+				mov es:[di],ax ; kopiowanie spacji do aktualnego kursora na ekranie
+				add di,2 ;przesuwanie kursora do nastepnego slowa (1 slowo = 2bajty)
+				loop czysc 
+			;zerowanie rejestrow
 			xor ax,ax ;tu bedzie pobierana liczba
 			xor bx,bx
 			xor cx,cx
 			xor dx,dx ;tu bedzie przechowywany i przesuwany wynik
-			;wlasciwie to od tad
+			;przygotowanie do otrzymania znakow 
 			mov di,0
 			mov cx,0005h	;maksymalnie przyjmiemy 5 znakow
 userInput:
@@ -43,7 +43,7 @@ userInput:
 					jnc noOverflowMul
 						call indicateOverflow
 						jmp endUserLoop
-					noOverflowMul:
+				noOverflowMul:
 				;dodajemy biezaca liczbe
 				xor ah,ah
 				add dx,ax
@@ -53,30 +53,23 @@ userInput:
 					noOverflowAdd:
 				loop userInput
 checkNoData:
-			cmp cl,5
-			jnz endUserLoop
-			call noData
+			cmp cl,5 ;sprawdza, czy mamy jakiekolwiek dane
+			jnz endUserLoop ;jesli cokolwiek zostalo wpisane
+			call noData ;jesli nic nie zostalo wprowadzone
 endUserLoop:
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;WYSWIETLANIE HEX
 			mov bx,dx ;kopiuj wynik
-			xor ch,ch
-			mov cl,4
+			xor ch,ch ;zeruj rejestr ch
+			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
-				mov ah,cl ;zapisuję counter glownej petli
-				fourCyclicLeft:
-					;TODO PRZESUNIECIE CYKLICZNE W LEWO
-					loop fourCyclicLeft
-				mov cl,ah ;przywracam counter glownej petli
+				RCL bx,4 ; przesuwamy cyklicznie w lewo 4 razy
 				mov al,bl ;kopiuję 8 bitow
 				and al,0fh ;biore 4 najmlodsze
 				call toHex ;zamieniam na znak w akumulatorze
 				mov es:[di],al ;piszę na ekran
 				add di,2 ;przesuwam kursor
-				;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
-				mov bx,dx
-				xor ch,ch
-				mov cl, 8
 			loop showHex
+			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
 			mov bx,dx
 			xor ch,ch
 			mov cl, 8
@@ -98,31 +91,31 @@ showBin:
 			jl notNumber
 			cmp al,'9'
 			jg notNumber
-			stc
+			stc ;ustawienie flagi carry = 1
 		RET   
 			notNumber:
-			clc
+			clc ;ustawienie flagi carry = 0
 		RET
 		indicateOverflow:
 				mov si,offset overflowString
-				mov ah,cl
+				mov ah,cl ;zapisujemy stan petli
 				mov cx, 24
-				printOverflowString:
-				movsb
-				add di,1
+				printOverflowString: ;drukuje stringa znak po znaku
+				movsb ;printowanie jednego znaku oraz przesuwanie o kursora o 1 bajt
+				add di,1 ;przesuniecie kursora o drugi bajt, w taki sposob, aby moglo wyswietlic kolejny znak
 				loop printOverflowString
-				mov cl,ah
-				mov dx,0FFFFh
+				mov cl,ah ;przywracamy stan petli
+				mov dx,0FFFFh ;nadpisanie wyniku overflowem - musi byc 0 jesli pierwszy znak to litera
 		RET
 		tenMultiplyDx:
-			mov ah,cl
+			mov ah,cl ;zapisujemy stan petli dla userInput
 			mov cx,9
 			mov bx,dx ;bx bedzie dodane 9 razy
 			multiplyBegin:
 				add dx,bx
 				jc multiplyEnd
 			loop multiplyBegin
-			mov cl,ah
+			mov cl,ah ;przywracamy stan petli dla userInput
 			multiplyEnd:
 		RET
 		noData:
@@ -139,6 +132,7 @@ showBin:
 			add al,'0'
 			jmp finnishToHex
 			letter:
+			sub al,10 ;odejmujemy 10, zeby pozniej moc przesunac ewentualnie literke o x miejsc dalej
 			add al,'A'	
 		finnishToHex:
 		RET
