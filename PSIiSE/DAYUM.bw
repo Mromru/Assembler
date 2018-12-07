@@ -97,6 +97,6 @@ knowledge base nazwa
 	Text2 := " ";
 	Text3 := "Joanna Micha³ek & Tomasz Piekarczyk";
 	vignette( Text1, Text2, Text3 );
-	goal("valju=klopsik");
+	goal("klopsik=X");
  end;
 end;
