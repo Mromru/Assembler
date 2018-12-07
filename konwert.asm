@@ -32,7 +32,6 @@ start:
 			xor cx,cx
 			xor dx,dx ;tu bedzie przechowywany i przesuwany wynik
 			;przygotowanie do otrzymania znakow 
-			mov di,0
 			mov cx,0005h	;maksymalnie przyjmiemy 5 znakow
 userInput:
 				mov ah,00h	; pobranie znaku
@@ -65,6 +64,7 @@ checkNoData:
 			call noData ;jesli nic nie zostalo wprowadzone
 endUserLoop:
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;WYSWIETLANIE HEX
+			mov di,160
 			mov bx,dx ;kopiuj wynik
 			xor ch,ch ;zeruj rejestr ch
 			mov cx,0004h ;będziemy obracac 4 razy petle
@@ -77,9 +77,10 @@ showHex:
 				add di,2 ;przesuwam kursor
 			loop showHex
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
+			mov di,320
 			mov bx,dx
 			xor ch,ch
-			mov cl, 8
+			mov cl,16
 showBin:
 				ROL bx,1
 				mov al,bl ;kopiuję 8 bitow
