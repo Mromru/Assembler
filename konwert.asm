@@ -19,6 +19,13 @@ start:
 				mov es:[di],ax ; kopiowanie spacji do aktualnego kursora na ekranie
 				add di,2 ;przesuwanie kursora do nastepnego slowa (1 slowo = 2bajty)
 				loop czysc 
+			mov di,0
+			mov si, offset inputDataString
+			mov cx, 27
+			printInputDataString:
+				movsb
+				add di,1
+				loop printInputDataString
 			;zerowanie rejestrow
 			xor ax,ax ;tu bedzie pobierana liczba
 			xor bx,bx
@@ -62,7 +69,7 @@ endUserLoop:
 			xor ch,ch ;zeruj rejestr ch
 			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
-				RCL bx,4 ; przesuwamy cyklicznie w lewo 4 razy
+				ROL bx,4 ; przesuwamy cyklicznie w lewo 4 razy
 				mov al,bl ;kopiuję 8 bitow
 				and al,0fh ;biore 4 najmlodsze
 				call toHex ;zamieniam na znak w akumulatorze
@@ -74,6 +81,7 @@ showHex:
 			xor ch,ch
 			mov cl, 8
 showBin:
+				ROL bx,1
 				mov al,bl ;kopiuję 8 bitow
 				and al,01h ;biore 1 najmlodszy
 				add al,'0';zamieniam na znak w akumulatorze
@@ -140,6 +148,7 @@ code ends
 data segment
 	overflowString db ' -> 65535; PRZEPELNIENIE'
 	noDataString db   'BRAK DANYCH -> 0'
+	inputDataString db 'PODAJ LICZBE DO KONWERSJI: ' ;27
 data ends
 stackS segment
 stackTop 	label word
