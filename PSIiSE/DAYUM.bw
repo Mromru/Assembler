@@ -19,7 +19,7 @@ knowledge base nazwa
 				"MushroomSpicyCasual",
 				"MushroomSpicyNinja",
 				"MushroomSweetCasual",
-				"MushroomSweetNinja"};
+				"MushroomSweetNinja"}
         picture {"PastaSpicyCasual.bmp",
 				"PastaSpicyNinja.bmp",
 				"PastaSweetCasual.bmp",
@@ -84,7 +84,7 @@ knowledge base nazwa
 	klopsik = "MushroomSweetCasual" if baza = "grzyby", smak = "s³odki", ninja = "nie ninja";
 	
 	klopsik = "MushroomSweetNinja" if baza = "grzyby", smak = "s³odki", ninja = "ninja";
-	
+
  end;
 
  control
@@ -97,6 +97,6 @@ knowledge base nazwa
 	Text2 := " ";
 	Text3 := "Joanna Micha³ek & Tomasz Piekarczyk";
 	vignette( Text1, Text2, Text3 );
-	goal("valju=X");
+	goal("valju=klopsik");
  end;
 end;
