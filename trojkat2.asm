@@ -21,8 +21,8 @@ czysc:
 			add di,2
 			loop czysc
 			
-			mov dh, 4 ; dh = x
-			mov dl, 4 ; dl = y
+			mov dh, 4 ; dh = y
+			mov dl, 4 ; dl = x
 			
 			call setCursor
 			
@@ -38,16 +38,17 @@ czysc:
 			;PROCEDURY
 	setCursor: ;ustawianie kursora ekranu na odpowiednich koordynatach 
 				mov di, 0 ; zerujemy adres kursora
-				mov cl,dl ;ustawiamy licznik petli dla przesuwania y
-				cmp dl,0
+				mov cl,dh ;ustawiamy licznik petli dla przesuwania y
+				cmp dh,0
 				je addX ;jeśli y = 0, czyli jestemy w 1szym rzedzie
 				call loopY ; jestli y != 0, przesuwamy kursor w pionie
 			addX:
-				;add di,dh ; przesuwamy kursor w poziomie 
+				mov dh,0 ;zerujemy dodanego juz y, zeby mozna bylo dodac x jako 16-bit
+				add di,dx ; przesuwamy kursor w poziomie 
 			RET		
 			
 	loopY: ;przesuwamy kursor wg y
-		add di,80
+		add di,160
 		loop loopY
 	RET
 			
