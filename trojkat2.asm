@@ -21,8 +21,8 @@ czysc:
 			add di,2
 			loop czysc
 			
-			mov dh, 4 ; dh = y
-			mov dl, 4 ; dl = x
+			mov dh, 12 ; dh = y
+			mov dl, 3 ; dl = x
 			
 			call setCursor
 			
@@ -50,6 +50,13 @@ czysc:
 	loopY: ;przesuwamy kursor wg y
 		add di,160
 		loop loopY
+	RET
+	checkEven: ;jesli x jest nieparzyste, to dodaje 1
+			mov dh, 1
+			and dh,dl ;jesli dl jest parzyste, to dh bedzie rowne 0
+			jz checkEvenEnd
+			add dl,1
+		checkEvenEnd:	
 	RET
 			
 codeSegment     ends
