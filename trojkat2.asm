@@ -22,10 +22,9 @@ czysc:
 			loop czysc
 			
 			mov di,160
-			add zmienna, 1 
-			mov si, offset zmienna
+			add zmienna+1, 1 
+			mov si, offset zmienna+1
 			movsb
-			;mov es:[di],zmienna
 
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			;WYCHODZIMY Z PROGRAMU
@@ -35,7 +34,7 @@ czysc:
 codeSegment     ends
 
 dataSegment     segment
-	zmienna db 'a'
+	zmienna db 'a','c'
 dataSegment     ends
 stackSegment    segment
 				dw    100h dup(0)
