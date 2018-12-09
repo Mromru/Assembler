@@ -1,0 +1,63 @@
+codeSegment    segment
+			assume cs:codeSegment, ds:dataSegment, ss:stackSegment ;Mowimy, ktory blok/segment jest ktory
+start:      
+			;USTAWIAMY WSZYSTKIE POTRZEBNE REJESTRY NA WARTOSCI POCZATKOWE
+			mov ax,dataSegment  ;najpierw ladujemy do akumulatora z 'labela'
+			mov ds,ax    		;potem ladujemy z akumulatora do wlasciwego rejestru
+			mov ax,stackSegment
+			mov ss,ax
+			mov sp,offset stackTop
+			mov ax,0B800h
+			mov es,ax
+			
+			;USTAWIAMY WARTOSCI DLA CZYSZCZENIA EKRANU (starszy bajt - atrybuty; mlodszy bajt - znak)
+			mov ax,0720h ;07h szary, 20h spacja
+			mov cx,8000  ;caly ekran ma 8000 bajtow
+			mov di,0	 ;poczatkowy offset es
+			
+			;CZYSZCZIMY EKRAN
+czysc:
+			mov es:[di],ax
+			add di,2
+			loop czysc
+			
+			mov dh, 4 ; dh = x
+			mov dl, 4 ; dl = y
+			
+			call setCursor
+			
+			add zmienna+1,1 
+			mov si, offset zmienna+1
+			movsb
+			
+			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+			;WYCHODZIMY Z PROGRAMU
+			mov     ah,4ch
+			mov	    al,0
+	        int	    21h
+			;PROCEDURY
+	setCursor: ;ustawianie kursora ekranu na odpowiednich koordynatach 
+				mov di, 0 ; zerujemy adres kursora
+				mov cl,dl ;ustawiamy licznik petli dla przesuwania y
+				cmp dl,0
+				je addX ;jeśli y = 0, czyli jestemy w 1szym rzedzie
+				call loopY ; jestli y != 0, przesuwamy kursor w pionie
+			addX:
+				;add di,dh ; przesuwamy kursor w poziomie 
+			RET		
+			
+	loopY: ;przesuwamy kursor wg y
+		add di,80
+		loop loopY
+	RET
+			
+codeSegment     ends
+
+dataSegment     segment
+	zmienna db 'a','c','e'
+dataSegment     ends
+stackSegment    segment
+				dw    100h dup(0)
+stackTop        Label word
+stackSegment    ends
+end start
