@@ -3,7 +3,7 @@ codeSegment    segment
 start:      
 			;USTAWIAMY WSZYSTKIE POTRZEBNE REJESTRY NA WARTOSCI POCZATKOWE
 			mov ax,dataSegment  ;najpierw ladujemy do akumulatora z 'labela'
-			mov dx,ax    		;potem ladujemy z akumulatora do wlasciwego rejestru
+			mov ds,ax    		;potem ladujemy z akumulatora do wlasciwego rejestru
 			mov ax,stackSegment
 			mov ss,ax
 			mov sp,offset stackTop
@@ -20,6 +20,8 @@ czysc:
 			mov es:[di],ax
 			add di,2
 			loop czysc
+			
+			add zmienna, 1 
 
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			;WYCHODZIMY Z PROGRAMU
@@ -29,9 +31,8 @@ czysc:
 codeSegment     ends
 
 dataSegment     segment
-
+	zmienna db 40
 dataSegment     ends
-
 stackSegment    segment
 				dw    100h dup(0)
 stackTop        Label word
