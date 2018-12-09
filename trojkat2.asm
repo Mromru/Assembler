@@ -43,6 +43,7 @@ czysc:
 				je addX ;jeśli y = 0, czyli jestemy w 1szym rzedzie
 				call loopY ; jestli y != 0, przesuwamy kursor w pionie
 			addX:
+				call checkEven
 				mov dh,0 ;zerujemy dodanego juz y, zeby mozna bylo dodac x jako 16-bit
 				add di,dx ; przesuwamy kursor w poziomie 
 			RET		
