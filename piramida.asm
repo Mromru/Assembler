@@ -3,7 +3,7 @@ codeSegment    segment
 start:      
 			;USTAWIAMY WSZYSTKIE POTRZEBNE REJESTRY NA WARTOSCI POCZATKOWE
 			mov ax,dataSegment  ;najpierw ladujemy do akumulatora z 'labela'
-			mov dx,ax    		;potem ladujemy z akumulatora do wlasciwego rejestru
+			mov ds,ax    		;potem ladujemy z akumulatora do wlasciwego rejestru
 			mov ax,stackSegment
 			mov ss,ax
 			mov sp,offset stackTop
@@ -15,7 +15,7 @@ start:
 			mov cx,4000  ;caly ekran ma 8000 bajtow
 			mov di,0	 ;poczatkowy offset es
 			
-			;CZYSZCZIMY EKRAN
+			;CZYSZCIMY EKRAN
 czysc:
 			mov es:[di],ax
 			add di,2
