@@ -12,7 +12,7 @@ start:
 			
 			;USTAWIAMY WARTOSCI DLA CZYSZCZENIA EKRANU (starszy bajt - atrybuty; mlodszy bajt - znak)
 			mov ax,0720h ;07h szary, 20h spacja
-			mov cx,4000  ;caly ekran ma 8000 bajtow
+			mov cx,2000  ;caly ekran ma 4000 bajtow
 			mov di,0	 ;poczatkowy offset es
 			
 			;CZYSZCIMY EKRAN
