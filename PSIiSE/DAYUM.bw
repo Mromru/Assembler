@@ -2,8 +2,9 @@ knowledge base nazwa
  sources
  end;
  facets
+	single yes;
+	
     klopsik:
-	single yes
 	val oneof {"PastaSpicyCasual",
 				"PastaSpicyNinja",
 				"PastaSweetCasual",
