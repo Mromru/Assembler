@@ -72,7 +72,6 @@ endUserLoop:
 			;;;;;;;;;;;;;;;;;KONWERSJA NA HEX
 			;Wyswietl 'Hex ':
 			mov di,160
-			mov bx,dx ;kopiuj wynik
 			xor ch,ch ;zeruj rejestr ch
 			mov si, offset hexString
 			mov cx, 5
@@ -81,6 +80,7 @@ endUserLoop:
 				inc di
 				loop printhexString
 			;Wlasciwa konwersja na hex
+			mov bx,dx ;kopiuj wynik
 			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
 				rol bx,4 ; przesuwamy cyklicznie w lewo 4 razy
@@ -95,7 +95,6 @@ showHex:
 			;;;;;;;;;;;;;;;;;KONWERSJA NA BINARNY
 			;Wyswietl 'Bin: '
 			mov di,320
-			mov bx,dx
 			xor ch,ch
 			mov si, offset binString
 			mov cx, 5
@@ -104,6 +103,7 @@ showHex:
 				inc di
 				loop printbinString
 			;Wlasciwa konwersja na bin
+			mov bx,dx
 			mov cl,16
 showBin:
 				rol bx,1
