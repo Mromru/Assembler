@@ -7,13 +7,13 @@ start:
 			mov ax,stackS
 			mov ss,ax
 			mov sp,offset stackTop
-			;inicjowanie es i di
 			mov ax, 0B800h ;inicjowanie adresu poczatku pamieci ekranu
 			mov es, ax
+			
 			mov di, 0 ;zerujemy di - przesuniecie kursora po ekranie
 			
 			;przygotowanie do czyszczenia ekranu
-			mov cx,2000 ;liczba slow do wyczyszczenia - 80x25??
+			mov cx,2000 ;liczba znakow do wyczyszczenia - 80x25
 			mov ax,0720h ;szara spacja na czarnym tle - puste miejsce
 			czysc:
 				mov es:[di],ax ; kopiowanie spacji do aktualnego kursora na ekranie
@@ -107,6 +107,9 @@ showBin:
 				inc di
 				inc di;przesuwam kursor
 				loop showBin
+				
+				mov ah,00h	; pobranie znaku z klawiatury w celu zatrzymania wyniku na ekranie
+				int 16h		
 				;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 				;WYCHODZIMY Z PROGRAMU
 				mov     ah,4ch
@@ -165,8 +168,8 @@ showBin:
 		RET
 code ends
 data segment
-	overflowString db ' -> 65535; PRZEPELNIENIE'
-	noDataString db   'BRAK DANYCH -> 0'
+	overflowString db ' -> 65535; PRZEPELNIENIE' ;24
+	noDataString db   'BRAK DANYCH -> 0' ;16
 	inputDataString db 'PODAJ LICZBE DO KONWERSJI: ' ;27
 	hexString db 'HEX: ' ;5
 	binString db 'BIN: ' ;5
