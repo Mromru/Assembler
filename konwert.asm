@@ -17,14 +17,15 @@ start:
 			mov ax,0720h ;szara spacja na czarnym tle - puste miejsce
 			czysc:
 				mov es:[di],ax ; kopiowanie spacji do aktualnego kursora na ekranie
-				add di,2 ;przesuwanie kursora do nastepnego slowa (1 slowo = 2bajty)
+				inc di
+				inc di ;przesuwanie kursora do nastepnego slowa (1 slowo = 2bajty)
 				loop czysc 
 			mov di,0
 			mov si, offset inputDataString
 			mov cx, 27
 			printInputDataString:
 				movsb
-				add di,1
+				inc di
 				loop printInputDataString
 			;zerowanie rejestrow
 			xor ax,ax ;tu bedzie pobierana liczba
@@ -41,7 +42,8 @@ userInput:
 				jnc checkNoData ;jezeli ustawilismy C=0, to nie jest i przerywamy wprowadzanie danych
 				
 				mov es:[di],al  ;wyswietlenie znaku na ekranie
-				add di,2	    ;i przesuniecie kursora
+				inc di
+				inc di ;i przesuniecie kursora
 				sub al,'0'		;char do int
 				
 				;mnozymy przez 10
@@ -72,7 +74,7 @@ endUserLoop:
 			mov cx, 5
 			printhexString:
 				movsb
-				add di,1
+				inc di
 				loop printhexString
 			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
@@ -81,7 +83,8 @@ showHex:
 				and al,0fh ;biore 4 najmlodsze
 				call toHex ;zamieniam na znak w akumulatorze
 				mov es:[di],al ;piszę na ekran
-				add di,2 ;przesuwam kursor
+				inc di
+				inc di
 			loop showHex
 			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
 			mov di,320
@@ -92,7 +95,7 @@ showHex:
 			mov cx, 5
 			printbinString:
 				movsb
-				add di,1
+				inc di
 				loop printbinString
 			mov cl,16
 showBin:
@@ -101,7 +104,8 @@ showBin:
 				and al,01h ;biore 1 najmlodszy
 				add al,'0';zamieniam na znak w akumulatorze
 				mov es:[di],al ;piszę na ekran
-				add di,2 ;przesuwam kursor
+				inc di
+				inc di;przesuwam kursor
 				loop showBin
 				;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 				;WYCHODZIMY Z PROGRAMU
@@ -125,7 +129,7 @@ showBin:
 				mov cx, 24
 				printOverflowString: ;drukuje stringa znak po znaku
 				movsb ;printowanie jednego znaku oraz przesuwanie o kursora o 1 bajt
-				add di,1 ;przesuniecie kursora o drugi bajt, w taki sposob, aby moglo wyswietlic kolejny znak
+				inc di ;przesuniecie kursora o drugi bajt, w taki sposob, aby moglo wyswietlic kolejny znak
 				loop printOverflowString
 				mov cl,ah ;przywracamy stan petli
 				mov dx,0FFFFh ;nadpisanie wyniku overflowem - musi byc 0 jesli pierwszy znak to litera
@@ -146,7 +150,7 @@ showBin:
 			mov cx, 16
 			printNoDataString:
 				movsb
-				add di,1
+				inc di
 				loop printNoDataString
 		RET
 		toHex:
