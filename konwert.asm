@@ -1,7 +1,7 @@
 code segment
 	assume cs:code, ds:data, ss:stackS
 start:
-			;inicjowanie segmentow
+			;INICJOWANIE SEGMENTOW
 			mov ax,data
 			mov ds,ax
 			mov ax,stackS
@@ -12,14 +12,16 @@ start:
 			
 			mov di, 0 ;zerujemy di - przesuniecie kursora po ekranie
 			
-			;przygotowanie do czyszczenia ekranu
+			;CZYSZCZENIE EKRANU
 			mov cx,2000 ;liczba znakow do wyczyszczenia - 80x25
 			mov ax,0720h ;szara spacja na czarnym tle - puste miejsce
 			czysc:
 				mov es:[di],ax ; kopiowanie spacji do aktualnego kursora na ekranie
 				inc di
 				inc di ;przesuwanie kursora do nastepnego slowa (1 slowo = 2bajty)
-				loop czysc 
+				loop czysc
+			
+			;WYSWIETLANIE 'PODAJ LICZBE DO KONWERSJI: '
 			mov di,0
 			mov si, offset inputDataString
 			mov cx, 27
@@ -27,12 +29,14 @@ start:
 				movsb
 				inc di
 				loop printInputDataString
-			;zerowanie rejestrow
+			
+			;ZEROWANIE REJESTRÓW
 			xor ax,ax ;tu bedzie pobierana liczba
 			xor bx,bx
 			xor cx,cx
 			xor dx,dx ;tu bedzie przechowywany i przesuwany wynik
-			;przygotowanie do otrzymania znakow 
+			
+			;;;;;;;;;;;;;;;;;WEJSCIE OD UZYTKOWNIKA
 			mov cx,0005h	;maksymalnie przyjmiemy 5 znakow
 userInput:
 				mov ah,00h	; pobranie znaku
@@ -65,17 +69,18 @@ checkNoData:
 			jnz endUserLoop ;jesli cokolwiek zostalo wpisane
 			call noData ;jesli nic nie zostalo wprowadzone
 endUserLoop:
-			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;WYSWIETLANIE HEX
+			;;;;;;;;;;;;;;;;;KONWERSJA NA HEX
+			;Wyswietl 'Hex ':
 			mov di,160
 			mov bx,dx ;kopiuj wynik
 			xor ch,ch ;zeruj rejestr ch
-			;;;;;; STRING HEX:
 			mov si, offset hexString
 			mov cx, 5
 			printhexString:
 				movsb
 				inc di
 				loop printhexString
+			;Wlasciwa konwersja na hex
 			mov cx,0004h ;będziemy obracac 4 razy petle
 showHex:	
 				rol bx,4 ; przesuwamy cyklicznie w lewo 4 razy
@@ -86,17 +91,19 @@ showHex:
 				inc di
 				inc di
 			loop showHex
-			;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;BINARNIE
+			
+			;;;;;;;;;;;;;;;;;KONWERSJA NA BINARNY
+			;Wyswietl 'Bin: '
 			mov di,320
 			mov bx,dx
 			xor ch,ch
-			;;;;; String BIN:
 			mov si, offset binString
 			mov cx, 5
 			printbinString:
 				movsb
 				inc di
 				loop printbinString
+			;Wlasciwa konwersja na bin
 			mov cl,16
 showBin:
 				rol bx,1
@@ -107,6 +114,7 @@ showBin:
 				inc di
 				inc di;przesuwam kursor
 				loop showBin
+				
 				
 				mov ah,00h	; pobranie znaku z klawiatury w celu zatrzymania wyniku na ekranie
 				int 16h		
